@@ -31,7 +31,7 @@ function open_mysql_connection() {
 	global $debug, $db_hostname, $db_login, $db_pwd, $db_name, $conn;
 	$cnx_err=false;	// erreur de connexion
 	
-	if ($debug) echo "Ouverture de la connexion MySql<br />";
+	if ($debug) echo "Ouverture de la connexion MySql<br>";
 	$conn = mysql_connect($db_hostname, $db_login, $db_pwd);
 	if (!$conn) {
 		$cnx_err=true;
