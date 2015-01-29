@@ -86,7 +86,8 @@ ini_set('max_execution_time', 300);
 
 // ouverture de la connexion à la base de données
 require_once(BASE.'lib/connect_db.php');
-open_mysql_connection();
+//open_mysql_connection();
+OpenDB();
 $glb_err=false;
 $msg = "";
 
@@ -104,10 +105,10 @@ $sql .= ");";
 echo "Exécution de la requête SQL = ".$sql."<br />";
 
 // exécution de la requête
-$res = mysql_query($sql, $conn);
+$res = DB_query($sql);
 if (!$res) {
 	$glb_err=true;
-	$msg = "Echec de la requête SQL : ".mysql_error();
+	$msg = "Echec de la requête SQL : ". DB_error();
 }
 
 
@@ -119,7 +120,7 @@ if ($glb_err) {
 } else {
 	echo "Requ&ecirc;te ex&eacute;cut&eacute;e avec succ&egrave;s<br />";
 }// fermeture de la connexion à la base
-close_mysql_connection();
+Close_DB();
 
 ?>
 
