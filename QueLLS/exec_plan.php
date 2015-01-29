@@ -83,7 +83,8 @@ ini_set('max_execution_time', 300);
 
 // ouverture de la connexion à la base de données
 require_once(BASE.'lib/connect_db.php');
-open_mysql_connection();
+// open_mysql_connection();
+OpenDB();
 
 // lecture des tâches à effectuer
 $sql = "select * from exec_plan where 1=1 ";
@@ -94,12 +95,12 @@ if ($debug) echo "sql=$sql<br>";
 
 $glb_err=false;
 
-$res = mysql_query($sql, $conn);
+$res = DB_query($sql);
 if (!$res) {
 	$glb_err=true;
-	$msg = "Echec de la requête SQL : ".mysql_error();
+	$msg = "Echec de la requête SQL : " . ErrorDB();
 } else {
-	if (mysql_num_rows($res) > 0) {
+	if (DB_num_rows($res) > 0) {
 		// traitement des enregistrements du plan 1 à 1
 		$plug_name = "";
 		$plug_address = "";
@@ -108,7 +109,7 @@ if (!$res) {
 					);
 		$last_url = "";
 		
-		while ($row = mysql_fetch_assoc($res)) {
+		while ($row = DB_fetch_assoc($res)) {
 			$url = replaceTags($row["command"], $row);
 			// Test de rupture
 			// - si l'enregistrement courant concerne une autre prise
@@ -224,7 +225,7 @@ if ($glb_err) {
 	echo "Requ&ecirc;te ex&eacute;cut&eacute;e avec succ&egrave;s<br />";
 }
 // fermeture de la connexion à la base
-close_mysql_connection();
+CloseDB();
 
 ?>
 
