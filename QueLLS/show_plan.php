@@ -24,7 +24,7 @@ ini_set('max_execution_time', 300);
 
 // ouverture de la connexion à la base de données
 require_once(BASE.'lib/connect_db.php');
-open_mysql_connection();
+OpenDB();
 
 // lecture de la liste des prises
 $sql = "select * from plug where 1=1 ";
@@ -35,14 +35,14 @@ if ($debug) echo "sql=$sql<br>";
 
 $glb_err=false;
 
-$res = mysql_query($sql, $conn);
+$res = DB_query($sql);
 if (!$res) {
 	$glb_err=true;
-	$msg = "Echec de la requête SQL : ".mysql_error();
+	$msg = "Echec de la requête SQL : ". DB_error();
 } else {
-	if (mysql_num_rows($res) > 0) {
+	if (DB_num_rows($res) > 0) {
 		// traitement des enregistrements 
-		while ($row = mysql_fetch_assoc($res)) {
+		while ($row = DB_fetch_assoc($res)) {
 			// affiche le contenu
 			echo "<h2>Planification courante pour ".utf8_encode($row['name'])." (".$row['ip_address'].")</h2>";
 			// crée un tableau pour les emplacements
@@ -102,7 +102,7 @@ if ($glb_err) {
 //	echo "Requ&ecirc;te ex&eacute;cut&eacute;e avec succ&egrave;s<br />";
 }
 // fermeture de la connexion à la base
-close_mysql_connection();
+Close_DB();
 
 ?>
 
